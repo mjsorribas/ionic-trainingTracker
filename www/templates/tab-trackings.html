@@ -1,0 +1,23 @@
+<ion-view view-title="Trackings"  class="">
+  <ion-content class="">
+
+    <ion-list>
+      <div class="item item-divider">
+        Activity list
+      </div>
+      <ion-item class="item-icon-left item-borderless item-toggle" ng-repeat="event in myStorage.activitylist">
+        <i class="icon ion-egg"></i>
+        <strong>{{event.name}}</strong> <small>{{event.description}}</small>
+
+        <label class="toggle toggle-assertive">
+          <input type="checkbox" ng-model="event.active" ng-change="updateEvent()">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
+    </ion-list>
+
+
+  </ion-content>
+</ion-view>
