@@ -9,8 +9,8 @@
         Current events
       </div>
       <ion-item
-        class="item-icon-left item-borderless item-button-right"
-        ng-repeat="activity in myStorage.activitylist | orderBy : 'date' : 'reverse'"
+        class="item-borderless"
+        ng-repeat="activity in storage.activityList | orderBy : 'date' : 'reverse'"
         ng-if="activity.active == true">
 
         <strong>{{activity.name}}</strong> | <small>Täningsgräns: {{activity.timeLimit}} timmar</small>
@@ -39,7 +39,7 @@
         <button
           ng-show="activity.currentEvent != undefined"
           class="button button-small button-assertive"
-          ng-click="removeEvent(activity)">
+          ng-click="removeEvent(activity.currentEvent)">
           <i class="button-icon button-small ion-close-circled"></i>
         </button>
         <button

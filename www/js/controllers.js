@@ -1,77 +1,49 @@
 angular.module('starter.controllers', [])
 
-  .controller('DashCtrl', ['$scope', 'storage', '$mixpanel', 'rfc4122', function ($scope, storage, $mixpanel, rfc4122) {
+  .controller('DashCtrl', ['$scope', 'storage', '$mixpanel', 'rfc4122', 'eventService', function ($scope, storage, $mixpanel, rfc4122, eventService) {
     $mixpanel.identify('Magnus');
 
     var self = this;
 
     self.init = function () {
 
-      $scope.myStorage = storage.load();
+      $scope.storage = storage.load();
+      for(var i = 0; i < $scope.storage.activityList.length; i++){
 
-      // sort eventList by date, latest date first
+        // if activity is inactive skip it
+        if($scope.storage.activityList.active == false){
+          continue;
+        }
 
-      // loop throug activityList and for each activity:
-      for (var i = 0; i < $scope.myStorage.activitylist.length; i++) {
-        for (var j = 0; j < $scope.myStorage.eventList.length; j++) {
-
-          // find latest event
-          // add that even to the activity as .currentEvent.
-          if ($scope.myStorage.activitylist[i].id == $scope.myStorage.eventList[j].id) {
-
-            var event = $scope.myStorage.eventList[j];
-
-            // if the event timeLimit is over, remove the nextTime parameter.
-            if (moment(event.nextDate).isBefore(new Date())) {
-              delete event.nextDate;
-            }
-            $scope.myStorage.activitylist[i].currentEvent = event;
-            break;
+        for(var j = 0; j < $scope.storage.eventList.length; j++){
+          if($scope.storage.activityList.id == $scope.storage.eventList.id){
+            $scope.storage.activityList[i].currentEvent = $scope.storage.eventList[j];
           }
         }
+
       }
 
     };
 
+    self.init();
 
     $scope.currentTime = function () {
       return new Date();
     };
 
-
     $scope.$on('myStorage', function () {
       self.init();
     });
-    self.init();
 
 
     // adds event to event list
     $scope.addEvent = function (eventType) {
-
-      var newEvent = angular.copy(eventType);
-
-      newEvent.uuid = rfc4122.v4();
-      newEvent.date = new Date();
-      newEvent.nextDate = moment(eventType.date).add(newEvent.timeLimit, 'hours');
-      $scope.myStorage.eventList.push(newEvent);
-      storage.update($scope.myStorage);
+      eventService.createEvent(eventType.id, new Date());
     };
 
     // removes event from event list
-    $scope.removeEvent = function (activity) {
-      $scope.myStorage = storage.load();
-
-      for (var i = 0; i < $scope.myStorage.eventList.length; i++) {
-        if (activity.currentEvent.uuid == $scope.myStorage.eventList[i].uuid) {
-          $scope.myStorage.eventList.splice(i, 1);
-        }
-      }
-      for (var i = 0; i < $scope.myStorage.activitylist.length; i++) {
-        if (activity.id == $scope.myStorage.activitylist.id) {
-          delete $scope.myStorage.activitylist.currentEvent;
-        }
-      }
-      storage.update($scope.myStorage);
+    $scope.removeEvent = function (currentEvent) {
+      eventService.removeEvent(currentEvent);
     };
 
 
@@ -81,89 +53,93 @@ angular.module('starter.controllers', [])
     };
 
   }])
-  .controller('TrackingCtrl', ['$scope', 'storage', 'eventModel', function ($scope, storage, eventModel) {
+  .controller('TrackingCtrl', ['$scope', 'storage', 'eventService', function ($scope, storage, eventService) {
 
     var self = this;
 
     self.init = function () {
-      $scope.myStorage = storage.load();
+      $scope.activityList = eventService.getActivityList();
+      console.log($scope.activityList);
     };
+    self.init();
+
     $scope.$on('myStorage', function () {
       self.init();
     });
-    self.init();
 
-    $scope.updateEvent = function () {
-      storage.update($scope.myStorage);
+    $scope.updateEvent = function (updatedList) {
+      eventService.saveActivityList(updatedList);
     }
 
-  }]).controller('StatCtrl', ['$scope', 'storage', 'eventModel', function ($scope, storage, eventModel) {
+  }])
 
-  var self = this;
+  .controller('StatCtrl', ['$scope', 'storage', function ($scope, storage) {
 
-  $scope.events = {};
+    var self = this;
 
-  self.init = function () {
-    var load = storage.load();
+    $scope.events = {};
 
-    $scope.eventHistory = load.eventList;
+    self.init = function () {
+      var load = storage.load();
 
-
-    for (var i = 0; i < load.activitylist.length; i++) {
-      $scope.events[load.activitylist[i].id] = [];
-    }
-
-    for (var j = 0; j < load.eventList.length; j++) {
-      for (var activityCategory in $scope.events) {
-        if (load.eventList[j].id == activityCategory) {
-          $scope.events[activityCategory].push(load.eventList[j]);
-        }
-      }
-    }
-    console.log($scope.events);
+      $scope.eventHistory = load.eventList;
 
 
-    // prepp data for statsview
-    $scope.pileStats = [];
-    for (var arry in $scope.events) {
-
-      if (!$scope.events[arry][0]) {
-        continue;
+      for (var i = 0; i < load.activitylist.length; i++) {
+        $scope.events[load.activitylist[i].id] = [];
       }
 
-      $scope.pileStats.push(
-        {
-          label: $scope.events[arry][0].name,
-          value: $scope.events[arry].length
+      for (var j = 0; j < load.eventList.length; j++) {
+        for (var activityCategory in $scope.events) {
+          if (load.eventList[j].id == activityCategory) {
+            $scope.events[activityCategory].push(load.eventList[j]);
+          }
         }
-      );
-    }
-    console.log($scope.pileStats);
+      }
+      console.log($scope.events);
 
 
-    $scope.myDataSource = {
-      chart: {
-        caption: "",
-        subCaption: "",
-        numberPrefix: "",
-        theme: "carbon"
-      },
-      data: $scope.pileStats
+      // prepp data for statsview
+      $scope.pileStats = [];
+      for (var arry in $scope.events) {
+
+        if (!$scope.events[arry][0]) {
+          continue;
+        }
+
+        $scope.pileStats.push(
+          {
+            label: $scope.events[arry][0].name,
+            value: $scope.events[arry].length
+          }
+        );
+      }
+      console.log($scope.pileStats);
+
+
+      $scope.myDataSource = {
+        chart: {
+          caption: "",
+          subCaption: "",
+          numberPrefix: "",
+          theme: "carbon"
+        },
+        data: $scope.pileStats
+      };
+
     };
 
-  };
+    $scope.$on('myStorage', function () {
+      self.init();
+    });
 
-  $scope.$on('myStorage', function () {
     self.init();
-  });
 
-  self.init();
-
-  $scope.doRefresh = function () {
-    self.init();
-    $scope.$broadcast('scroll.refreshComplete');
-  };
+    $scope.doRefresh = function () {
+      self.init();
+      $scope.$broadcast('scroll.refreshComplete');
+    };
 
 
-}]);
+  }]);
 

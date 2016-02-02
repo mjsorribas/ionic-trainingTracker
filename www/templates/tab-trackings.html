@@ -5,12 +5,12 @@
       <div class="item item-divider">
         Activity list
       </div>
-      <ion-item class="item-icon-left item-borderless item-toggle" ng-repeat="event in myStorage.activitylist">
+      <ion-item class="item-icon-left item-borderless item-toggle" ng-repeat="event in activityList">
         <i class="icon ion-egg"></i>
         <strong>{{event.name}}</strong> <small>{{event.description}}</small>
 
         <label class="toggle toggle-assertive">
-          <input type="checkbox" ng-model="event.active" ng-change="updateEvent()">
+          <input type="checkbox" ng-model="event.active" ng-change="updateEvent(activityList)">
           <div class="track">
             <div class="handle"></div>
           </div>

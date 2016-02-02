@@ -2,6 +2,26 @@ eventModule.factory('storage', ['localStorageService', '$mixpanel', function (lo
 
   var self = this;
 
+  var storage = {
+    load: function () {
+      var myStorage = localStorageService.load('myStorage');
+      if(typeof myStorage == 'undefined'){
+        myStorage = {
+          activityList : [],
+          eventList : []
+        }
+      }
+      return myStorage;
+    },
+    update: function (storage) {
+      localStorageService.save('myStorage', storage, true);
+    }
+  };
+  return storage;
+
+}]).factory('eventService', ['rfc4122', 'storage', function (rfc4122, storage) {
+
+  var self = this;
   self.presetActivies = [
     {
       id: 'eatingday',
@@ -125,42 +145,63 @@ eventModule.factory('storage', ['localStorageService', '$mixpanel', function (lo
     }
   ];
 
-  self.storage = {
-    activitylist: self.presetActivies,
-    eventList: []
-  };
+  function Event(id, uuid, name, description, date, timeLimit) {
+    this.id = id;
+    this.uuid = uuid;
+    this.name = name;
+    this.description = description;
+    this.date = date;
+    this.timeLimit = timeLimit
+  }
 
-  var storage = {
-    load: function () {
-      var storage = localStorageService.load('myStorage');
-      if (typeof storage != 'undefined') {
-        self.storage = storage;
+  var eventService = {
+    getActivityList : function(){
+      var myStorage = storage.load();
+      if(myStorage.activityList.length == 0){
+        myStorage.activityList = self.presetActivies;
+        storage.update(myStorage);
       }
-      return self.storage;
+      return myStorage['activityList'];
     },
-    update: function (myStorage) {
-      localStorageService.save('myStorage', myStorage, true);
+    saveActivityList : function(updatedList){
+      var myStorage = storage.load();
+      myStorage.activityList = updatedList;
+      storage.update(myStorage);
+      console.log(myStorage);
+    },
+    createEvent: function (id, date) {
+      for (var i = 0; i < self.presetActivies.length; i++) {
+        if (self.presetActivies[i].id = id) {
+          var activity = self.presetActivies[i];
+          var event = new Event(
+            activity.id,
+            rfc4122.v4(),
+            activity.name,
+            activity.description,
+            date,
+            activity.timeLimit
+          );
+          event.nextDate = moment(event.date).add(event.timeLimit, 'hours');
+          var myStorage = storage.load();
+          myStorage.eventList.push(event);
+          storage.update(myStorage);
+          return event;
+        }
+      }
+    },
+    removeEvent : function(currentEvent){
+      var myStorage = storage.load();
+      if(myStorage.eventList && myStorage.eventList.length > 0){
+        for(var i = 0; myStorage.eventList.length; i++){
+          if(myStorage.eventList.uuid == currentEvent.uuid){
+            myStorage.eventList.splice(i, 1);
+          }
+        }
+      }
+      storage.update(myStorage);
     }
   };
-  return storage;
-
-}]).factory('eventModel', ['storage', function (storage) {
-
-  var self = this;
-
-  var eventModel = {
-    updateActivitylist: function (list) {
-      var myStorage = storage.load();
-      myStorage.activitylist = list;
-      localStorageService.save('myStorage', myStorage, false);
-    },
-    addToEventList: function (event) {
-      var myStorage = storage.load();
-      myStorage.eventList.push(event);
-      localStorageService.save('myStorage', myStorage, false);
-    }
-  };
-  return eventModel;
+  return eventService;
 
 }]);
 
