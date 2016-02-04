@@ -1,68 +1,117 @@
 <ion-view view-title="Dashboard" class="">
-  <ion-content class="">
+  <ion-content>
     <ion-refresher
       pulling-text="Pull to refresh..."
       on-refresh="doRefresh()">
     </ion-refresher>
     <ion-list>
-      <div class="item item-divider">
-        Current events
-      </div>
+
+
       <ion-item
-        class="item-borderless item-icon-left item-icon-right item-button-right"
-        ng-repeat="activity in storage.activityList | orderBy : 'date' : 'reverse'"
-        ng-if="activity.active == true">
-        <i class="icon ion-ribbon-b"></i>
+        class="item-borderless"
+        ng-repeat="activity in storage.activityList | orderBy: 'count'"
+        ng-show="activity.active == true">
 
-
-        <p style="white-space: normal; overflow: auto; line-height: 1em;">
-          <strong>{{activity.name}}</strong><span ng-show="activity.currentEvent.nextDate != undefined"> | </span>
-          <small
-            am-time-ago="activity.currentEvent.date">
-
-          </small>
-          <small ng-show="activity.currentEvent.nextDate != undefined" class="">, nästa tillfälle är tidigast</small>
-          <small
-            ng-show="activity.currentEvent.nextDate != undefined"
-            class=""
-            am-time-ago="activity.currentEvent.nextDate">
-          </small><span ng-show="activity.currentEvent.nextDate != undefined">.</span>
-          <small ng-hide="activity.currentEvent.nextDate != undefined">Tidsgräns: {{activity.timeLimit}} timmar</small>
-        </p>
-
-        <progress
-          ng-if="activity.currentEvent"
-          style="margin: -5px 0 0 0;"
-          max="{{activity.currentEvent.timeLimit * 60}}"
-          value="{{activity.currentEvent.nextDate | amDifference : null : 'minutes' }}">
-        </progress>
-
-
-        <!--
-        <p style="white-space: normal; overflow: auto; line-height: 1em; font-style: italic;">
-          <small>{{activity.description}}</small>
-        </p>
-        -->
-
-
-        <button
-          ng-show="activity.currentEvent != undefined"
-          class="button button-small button-assertive"
-          ng-click="deleteEvent(activity.currentEvent.uuid)">
-          <i class="button-icon button-small ion-close-circled"></i>
-        </button>
-        <button
-          ng-show="activity.currentEvent == undefined"
-          class="button button-small button-dark"
-          ng-click="addEvent(activity)">
-          <i class="button-icon button-small ion-clock"></i>
-        </button>
-
+        <img src="http://hiitacademy.com/wp-content/uploads/2015/02/knee_elbow_plank.jpg" width="100%" alt="">
+        <div class="row">
+          <div class="col col-10" ng-click="toggleEvent(activity)">
+            <div style="width: 26px; height: 26px; position: absolute; text-align: center; padding-top: 3px; font-size: 10px;">
+              <strong ng-show="activity.currentEvent">
+                {{activity.currentEvent.nextDate | amDifference : null : 'hours' }}
+              </strong>
+              <strong style="color: lightgreen;" ng-hide="activity.currentEvent">GO</strong>
+            </div>
+            <div
+              round-progress
+              max="activity.currentEvent.timeLimit * 60"
+              current="activity.currentEvent.nextDate | amDifference : null : 'minutes' "
+              color="{{activity.currentEvent?'#444':'transparent'}}"
+              bgcolor="{{activity.currentEvent?'lightgrey':'lightgreen'}}"
+              radius="13"
+              stroke="3"
+              semi="false"
+              rounded="false"
+              clockwise="false"
+              responsive="false"
+              duration="1500"
+              animation="easeInOutQuart"
+              animation-delay="0">
+            </div>
+          </div>
+          <div class="col">
+            <!--<button ng-click="addEvent(activity)">add event</button>-->
+            <p style="white-space: normal; overflow: auto; line-height: 1em;">
+              <!--{{activity.date}} {{activity.count}}<br>-->
+              <strong>{{activity.name}}</strong> | <small am-time-ago="activity.currentEvent.date"></small><small ng-show="activity.currentEvent.nextDate != undefined" class="">, nästa tillfälle är tidigast</small>
+              <small
+                ng-show="activity.currentEvent.nextDate != undefined"
+                class=""
+                am-time-ago="activity.currentEvent.nextDate">
+              </small><span ng-show="activity.currentEvent.nextDate != undefined">.</span>
+              <small>{{activity.description}}</small>
+              <small ng-hide="activity.currentEvent.nextDate != undefined">Tidsgräns: {{activity.timeLimit}} timmar</small>
+            </p>
+          </div>
+        </div>
 
 
       </ion-item>
 
-    </ion-list>
+      <!--
+            <ion-item
+              class="item-borderless item-icon-left item-icon-right item-button-right"
+              ng-repeat="activity in storage.activityList | orderBy : 'date' : 'reverse'"
+              ng-if="activity.active == true">
+              <i class="icon ion-ribbon-b"></i>
 
+
+              <p style="white-space: normal; overflow: auto; line-height: 1em;">
+                <strong>{{activity.name}}</strong><span ng-show="activity.currentEvent.nextDate != undefined"> | </span>
+                <small
+                  am-time-ago="activity.currentEvent.date">
+
+                </small>
+                <small ng-show="activity.currentEvent.nextDate != undefined" class="">, nästa tillfälle är tidigast</small>
+                <small
+                  ng-show="activity.currentEvent.nextDate != undefined"
+                  class=""
+                  am-time-ago="activity.currentEvent.nextDate">
+                </small>
+                <span ng-show="activity.currentEvent.nextDate != undefined">.</span>
+                <small ng-hide="activity.currentEvent.nextDate != undefined">Tidsgräns: {{activity.timeLimit}} timmar</small>
+              </p>
+
+              <progress
+                ng-if="activity.currentEvent"
+                style="margin: -5px 0 0 0;"
+                max="{{activity.currentEvent.timeLimit * 60}}"
+                value="{{activity.currentEvent.nextDate | amDifference : null : 'minutes' }}">
+              </progress>
+
+      -->
+      <!--
+      <p style="white-space: normal; overflow: auto; line-height: 1em; font-style: italic;">
+        <small>{{activity.description}}</small>
+      </p>
+      -->
+      <!--
+
+              <button
+                ng-show="activity.currentEvent != undefined"
+                class="button button-small button-assertive"
+                ng-click="deleteEvent(activity.currentEvent.uuid)">
+                <i class="button-icon button-small ion-close-circled"></i>
+              </button>
+              <button
+                ng-show="activity.currentEvent == undefined"
+                class="button button-small button-dark"
+                ng-click="addEvent(activity)">
+                <i class="button-icon button-small ion-clock"></i>
+              </button>
+      -->
+
+      </ion-item>
+
+    </ion-list>
   </ion-content>
 </ion-view>

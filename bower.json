@@ -8,6 +8,7 @@
     "angular-moment": "^0.10.3",
     "moment": "^2.11.1",
     "angular-mixpanel": "^1.1.2",
-    "angular-uuid-service": "^0.1.0"
+    "angular-uuid-service": "^0.1.0",
+    "angular-svg-round-progressbar": "^0.3.10"
   }
 }

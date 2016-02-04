@@ -11,7 +11,9 @@ angular.module('starter', [
     'eventModule',
     'miscModule',
     'analytics.mixpanel',
-    'uuid'
+    'uuid',
+    'angular-svg-round-progress'
+
   ])
 
   .run(function ($ionicPlatform) {

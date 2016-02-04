@@ -13,9 +13,13 @@ angular.module('starter.controllers', [])
       var activities = $scope.storage.activityList;
 
       for (var i = 0; i < events.length; i++) {
-        if ($scope.storage.activityList[events[i].id]) {
+        if (!$scope.storage.activityList[events[i].id].currentEvent) {
           $scope.storage.activityList[[events[i].id]].currentEvent = events[i];
+          $scope.storage.activityList[[events[i].id]].count++;
+        }else{
+          $scope.storage.activityList[[events[i].id]].count++;
         }
+
       }
 
     };
@@ -30,6 +34,14 @@ angular.module('starter.controllers', [])
       self.init();
     });
 
+
+    $scope.toggleEvent = function(activity){
+      if(activity.currentEvent){
+        $scope.deleteEvent(activity.currentEvent.uuid);
+      }else{
+        $scope.addEvent(activity);
+      }
+    };
 
     // adds event to event list
     $scope.addEvent = function (activity) {
