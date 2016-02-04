@@ -9,20 +9,25 @@
         Current events
       </div>
       <ion-item
-        class="item-borderless"
+        class="item-borderless item-icon-left item-icon-right item-button-right"
         ng-repeat="activity in storage.activityList | orderBy : 'date' : 'reverse'"
         ng-if="activity.active == true">
+        <i class="icon ion-ribbon-b"></i>
 
-        <strong>{{activity.name}}</strong> | <small>Täningsgräns: {{activity.timeLimit}} timmar</small>
 
         <p style="white-space: normal; overflow: auto; line-height: 1em;">
-          <small ng-show="activity.currentEvent.date != undefined">Du tränade</small>
-          <small am-time-ago="activity.currentEvent.date">{{activity.currentEvent.date}}</small>
-          <small ng-show="activity.currentEvent.nextDate != undefined" class="">, nästa träning är tidigast</small>
+          <strong>{{activity.name}}</strong><span ng-show="activity.currentEvent.nextDate != undefined"> | </span>
           <small
-            ng-show="activity.currentEvent.nextDate != undefined" class=""
-            am-time-ago="activity.currentEvent.nextDate">{{activity.currentEvent.nextDate}}
+            am-time-ago="activity.currentEvent.date">
+
           </small>
+          <small ng-show="activity.currentEvent.nextDate != undefined" class="">, nästa tillfälle är tidigast</small>
+          <small
+            ng-show="activity.currentEvent.nextDate != undefined"
+            class=""
+            am-time-ago="activity.currentEvent.nextDate">
+          </small><span ng-show="activity.currentEvent.nextDate != undefined">.</span>
+          <small ng-hide="activity.currentEvent.nextDate != undefined">Tidsgräns: {{activity.timeLimit}} timmar</small>
         </p>
 
         <progress
@@ -32,14 +37,18 @@
           value="{{activity.currentEvent.nextDate | amDifference : null : 'minutes' }}">
         </progress>
 
+
+        <!--
         <p style="white-space: normal; overflow: auto; line-height: 1em; font-style: italic;">
           <small>{{activity.description}}</small>
         </p>
+        -->
+
 
         <button
           ng-show="activity.currentEvent != undefined"
           class="button button-small button-assertive"
-          ng-click="removeEvent(activity.currentEvent)">
+          ng-click="deleteEvent(activity.currentEvent.uuid)">
           <i class="button-icon button-small ion-close-circled"></i>
         </button>
         <button
@@ -48,7 +57,11 @@
           ng-click="addEvent(activity)">
           <i class="button-icon button-small ion-clock"></i>
         </button>
+
+
+
       </ion-item>
+
     </ion-list>
 
   </ion-content>

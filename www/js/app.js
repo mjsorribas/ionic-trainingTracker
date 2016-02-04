@@ -91,5 +91,5 @@ angular.module('starter', [
 
   })
   .run(function (amMoment) {
-    amMoment.changeLocale('de');
+    amMoment.changeLocale('sv');
   });

@@ -8,19 +8,14 @@ angular.module('starter.controllers', [])
     self.init = function () {
 
       $scope.storage = storage.load();
-      for(var i = 0; i < $scope.storage.activityList.length; i++){
 
-        // if activity is inactive skip it
-        if($scope.storage.activityList.active == false){
-          continue;
+      var events = $scope.storage.eventList;
+      var activities = $scope.storage.activityList;
+
+      for (var i = 0; i < events.length; i++) {
+        if ($scope.storage.activityList[events[i].id]) {
+          $scope.storage.activityList[[events[i].id]].currentEvent = events[i];
         }
-
-        for(var j = 0; j < $scope.storage.eventList.length; j++){
-          if($scope.storage.activityList.id == $scope.storage.eventList.id){
-            $scope.storage.activityList[i].currentEvent = $scope.storage.eventList[j];
-          }
-        }
-
       }
 
     };
@@ -37,13 +32,13 @@ angular.module('starter.controllers', [])
 
 
     // adds event to event list
-    $scope.addEvent = function (eventType) {
-      eventService.createEvent(eventType.id, new Date());
+    $scope.addEvent = function (activity) {
+      eventService.createEvent(activity);
     };
 
     // removes event from event list
-    $scope.removeEvent = function (currentEvent) {
-      eventService.removeEvent(currentEvent);
+    $scope.deleteEvent = function (eventUUID) {
+      eventService.removeEvent(eventUUID);
     };
 
 
@@ -59,7 +54,6 @@ angular.module('starter.controllers', [])
 
     self.init = function () {
       $scope.activityList = eventService.getActivityList();
-      console.log($scope.activityList);
     };
     self.init();
 
@@ -80,42 +74,30 @@ angular.module('starter.controllers', [])
     $scope.events = {};
 
     self.init = function () {
-      var load = storage.load();
 
-      $scope.eventHistory = load.eventList;
+      $scope.myStorage = storage.load();
 
+      // add data for history events
+      $scope.eventHistory = $scope.myStorage.eventList;
 
-      for (var i = 0; i < load.activitylist.length; i++) {
-        $scope.events[load.activitylist[i].id] = [];
-      }
-
-      for (var j = 0; j < load.eventList.length; j++) {
-        for (var activityCategory in $scope.events) {
-          if (load.eventList[j].id == activityCategory) {
-            $scope.events[activityCategory].push(load.eventList[j]);
-          }
-        }
-      }
-      console.log($scope.events);
-
-
-      // prepp data for statsview
+      // create object for stats
       $scope.pileStats = [];
-      for (var arry in $scope.events) {
+      for (var activity in $scope.myStorage.activityList) {
+        if ($scope.myStorage.activityList[activity].active == true) {
 
-        if (!$scope.events[arry][0]) {
-          continue;
-        }
-
-        $scope.pileStats.push(
-          {
-            label: $scope.events[arry][0].name,
-            value: $scope.events[arry].length
+          var count = 0;
+          for (var a = 0; a < $scope.eventHistory.length; a++) {
+            if ($scope.myStorage.activityList[activity].id == $scope.eventHistory[a].id) {
+              count++;
+            }
           }
-        );
+          // add plied data to stat obejct
+          $scope.pileStats.push({
+            label: $scope.myStorage.activityList[activity].name,
+            value: count
+          });
+        }
       }
-      console.log($scope.pileStats);
-
 
       $scope.myDataSource = {
         chart: {
@@ -142,4 +124,5 @@ angular.module('starter.controllers', [])
 
 
   }]);
+
 
