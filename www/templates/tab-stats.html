@@ -21,7 +21,7 @@
         Event history
       </div>
       <ion-item class="item-icon-left item-borderless"
-                ng-repeat="event in myStorage.eventList track by $index | orderBy : 'date' : 'reverse'">
+                ng-repeat="event in myStorage.eventList | orderBy : 'date' : 'reverse'">
         <i class="icon ion-ribbon-b"></i>
         <strong>{{event.name}}</strong> |
         <small>{{event.date | amDateFormat : 'ddd Do MMM HH:mm'}}</small>

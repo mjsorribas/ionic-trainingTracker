@@ -92,6 +92,12 @@ angular.module('starter', [
     $urlRouterProvider.otherwise('/tab/dash');
 
   })
-  .run(function (amMoment) {
+  .run(function (amMoment,rfc4122, localStorageService, $mixpanel) {
+
+    if(!localStorageService.load('userUUID')){
+      localStorageService.save('userUUID', rfc4122.v4());
+    }else{
+      $mixpanel.identify(localStorageService.load('userUUID'));
+    }
     amMoment.changeLocale('sv');
   });

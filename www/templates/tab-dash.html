@@ -9,10 +9,10 @@
 
       <ion-item
         class="item-borderless"
-        ng-repeat="activity in storage.activityList | orderBy: 'count'"
+        ng-repeat="activity in storage.activityList | orderBy: 'count' : 'reverse'"
         ng-show="activity.active == true">
 
-        <img src="http://hiitacademy.com/wp-content/uploads/2015/02/knee_elbow_plank.jpg" width="100%" alt="">
+
         <div class="row">
           <div class="col col-10" ng-click="toggleEvent(activity)">
             <div style="width: 26px; height: 26px; position: absolute; text-align: center; padding-top: 3px; font-size: 10px;">
@@ -23,8 +23,8 @@
             </div>
             <div
               round-progress
-              max="activity.currentEvent.timeLimit * 60"
-              current="activity.currentEvent.nextDate | amDifference : null : 'minutes' "
+              max="activity.currentEvent.timeLimit"
+              current="activity.currentEvent.nextDate | amDifference : $scope.currentDate : 'seconds'"
               color="{{activity.currentEvent?'#444':'transparent'}}"
               bgcolor="{{activity.currentEvent?'lightgrey':'lightgreen'}}"
               radius="13"
@@ -42,7 +42,15 @@
             <!--<button ng-click="addEvent(activity)">add event</button>-->
             <p style="white-space: normal; overflow: auto; line-height: 1em;">
               <!--{{activity.date}} {{activity.count}}<br>-->
-              <strong>{{activity.name}}</strong> | <small am-time-ago="activity.currentEvent.date"></small><small ng-show="activity.currentEvent.nextDate != undefined" class="">, nästa tillfälle är tidigast</small>
+
+            <!--
+            <hr>
+              {{activity.currentEvent.nextDate | amDifference : null : 'minutes'}}/
+              {{(activity.currentEvent.timeLimit)}}<br>
+            <hr>
+            -->
+
+              <strong>{{activity.count}} | {{activity.name}}</strong> | <small am-time-ago="activity.currentEvent.date"></small><small ng-show="activity.currentEvent.nextDate != undefined" class="">, nästa tillfälle är tidigast</small>
               <small
                 ng-show="activity.currentEvent.nextDate != undefined"
                 class=""

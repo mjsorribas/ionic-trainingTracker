@@ -1,11 +1,12 @@
 angular.module('starter.controllers', [])
 
-  .controller('DashCtrl', ['$scope', 'storage', '$mixpanel', 'rfc4122', 'eventService', function ($scope, storage, $mixpanel, rfc4122, eventService) {
-    $mixpanel.identify('Magnus');
+  .controller('DashCtrl', ['$scope', 'storage', '$mixpanel', 'rfc4122', 'eventService', '$interval', function ($scope, storage, $mixpanel, rfc4122, eventService, $interval) {
 
     var self = this;
 
     self.init = function () {
+
+      $mixpanel.track('InitDash');
 
       $scope.storage = storage.load();
 
@@ -13,18 +14,57 @@ angular.module('starter.controllers', [])
       var activities = $scope.storage.activityList;
 
       for (var i = 0; i < events.length; i++) {
-        if (!$scope.storage.activityList[events[i].id].currentEvent) {
-          $scope.storage.activityList[[events[i].id]].currentEvent = events[i];
-          $scope.storage.activityList[[events[i].id]].count++;
-        }else{
-          $scope.storage.activityList[[events[i].id]].count++;
+
+
+        var currentEvent = events[i];
+        var activity = $scope.storage.activityList[events[i].id];
+
+        if (moment(currentEvent.nextDate).isAfter(new Date())) {
+          if (!activity.currentEvent) {
+            activity.currentEvent = currentEvent;
+            activity.count++;
+          } else {
+            activity.count++;
+          }
         }
+
+
+        /*
+         if (!$scope.storage.activityList[events[i].id].currentEvent) {
+         $scope.storage.activityList[[events[i].id]].currentEvent = events[i];
+         $scope.storage.activityList[[events[i].id]].count++;
+         }else{
+         $scope.storage.activityList[[events[i].id]].count++;
+         }
+         */
 
       }
 
     };
 
     self.init();
+
+
+    $interval(function () {
+      $scope.currentDate = new Date();
+      for(var activity in $scope.storage.activityList){
+        if($scope.storage.activityList[activity].currentEvent){
+          if(moment($scope.storage.activityList[activity].currentEvent.nextDate).isBefore(new Date())){
+            delete $scope.storage.activityList[activity].currentEvent;
+          }
+        }
+      }
+    }, 1000);
+
+
+    $scope.$on("$ionicView.beforeEnter", function (event) {
+      self.init();
+    });
+
+
+    $scope.runMe = function () {
+      alert(1);
+    };
 
     $scope.currentTime = function () {
       return new Date();
@@ -35,10 +75,10 @@ angular.module('starter.controllers', [])
     });
 
 
-    $scope.toggleEvent = function(activity){
-      if(activity.currentEvent){
+    $scope.toggleEvent = function (activity) {
+      if (activity.currentEvent) {
         $scope.deleteEvent(activity.currentEvent.uuid);
-      }else{
+      } else {
         $scope.addEvent(activity);
       }
     };
@@ -60,11 +100,12 @@ angular.module('starter.controllers', [])
     };
 
   }])
-  .controller('TrackingCtrl', ['$scope', 'storage', 'eventService', function ($scope, storage, eventService) {
+  .controller('TrackingCtrl', ['$scope', 'storage', 'eventService', '$mixpanel', function ($scope, storage, eventService, $mixpanel) {
 
     var self = this;
 
     self.init = function () {
+      $mixpanel.track('InitTrack');
       $scope.activityList = eventService.getActivityList();
     };
     self.init();
@@ -79,14 +120,14 @@ angular.module('starter.controllers', [])
 
   }])
 
-  .controller('StatCtrl', ['$scope', 'storage', function ($scope, storage) {
+  .controller('StatCtrl', ['$scope', 'storage', '$mixpanel', function ($scope, storage, $mixpanel) {
 
     var self = this;
 
     $scope.events = {};
 
     self.init = function () {
-
+      $mixpanel.track('InitStats');
       $scope.myStorage = storage.load();
 
       // add data for history events
