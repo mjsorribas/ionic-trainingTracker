@@ -6,9 +6,10 @@
     </ion-refresher>
     <ion-list>
 
-
+      <br>
       <ion-item
         class="item-borderless"
+        style="padding: 0 10px;"
         ng-repeat="activity in storage.activityList | orderBy: 'count' : 'reverse'"
         ng-show="activity.active == true">
 
@@ -38,7 +39,7 @@
               animation-delay="0">
             </div>
           </div>
-          <div class="col">
+          <div class="col" style="padding: 10px;">
             <!--<button ng-click="addEvent(activity)">add event</button>-->
             <p style="white-space: normal; overflow: auto; line-height: 1em;">
               <!--{{activity.date}} {{activity.count}}<br>-->
@@ -50,13 +51,13 @@
             <hr>
             -->
 
-              <strong>{{activity.count}} | {{activity.name}}</strong> | <small am-time-ago="activity.currentEvent.date"></small><small ng-show="activity.currentEvent.nextDate != undefined" class="">, nästa tillfälle är tidigast</small>
+              <strong>{{activity.name}}</strong> | <small am-time-ago="activity.currentEvent.date"></small><small ng-show="activity.currentEvent.nextDate != undefined" class="">, nästa tillfälle är tidigast</small>
               <small
                 ng-show="activity.currentEvent.nextDate != undefined"
                 class=""
                 am-time-ago="activity.currentEvent.nextDate">
               </small><span ng-show="activity.currentEvent.nextDate != undefined">.</span>
-              <small>{{activity.description}}</small>
+              <!--<small>{{activity.description}}</small>-->
               <small ng-hide="activity.currentEvent.nextDate != undefined">Tidsgräns: {{activity.timeLimit}} timmar</small>
             </p>
           </div>
