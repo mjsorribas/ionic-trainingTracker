@@ -24,7 +24,7 @@ eventModule.factory('storage', ['localStorageService', '$mixpanel', function (lo
   self.presetActivies = {
     'testevent': {
       id: 'testevent',
-      name: 'Testevent',
+      name: 'Monsterevent som testar',
       description: 'testevent testevent testevent testevent testevent testevent testevent testevent testevent testevent.',
       active: false,
       count: 0,
@@ -33,7 +33,7 @@ eventModule.factory('storage', ['localStorageService', '$mixpanel', function (lo
     },
     'eatingday': {
       id: 'eatingday',
-      name: 'Ätardag',
+      name: 'Äntligen ätardag',
       description: 'Fördelen jag ser av att ha en ätardag är att jag blir mer motiverad av att äta bra under 6 dagar innan jag får äta något gott på dag 7. Då har jag alltid något att se fram emot och när jag väl äter den onyttiga maten eller godiset kommer jag med största sannolikhet att äta betydligt mindre av det än om jag hade ätit det oftare.',
       active: false,
       count: 0,
@@ -42,7 +42,7 @@ eventModule.factory('storage', ['localStorageService', '$mixpanel', function (lo
     },
     'back': {
       id: 'back',
-      name: 'Rygg',
+      name: 'Dead back exercise',
       description: 'Starka ryggmuskler och god rörlighet i ryggraden förebygger ryggont och förbättrar din hållning. Det är viktigt att träna både styrka och rörlighet för ryggen.',
       active: false,
       count: 0,
@@ -51,7 +51,7 @@ eventModule.factory('storage', ['localStorageService', '$mixpanel', function (lo
     },
     'chest': {
       id: 'chest',
-      name: 'Bröst',
+      name: 'Compressd tiddies',
       description: ' Det är bättre att köra med lite lättare vikter och ha kontroll genom övningen, än att köra för tungt. Träna igenom hela bröstet, var otroligt noga med tekniken och höj successivt vikterna. Då kommer också resultaten.',
       active: false,
       count: 0,
@@ -87,7 +87,7 @@ eventModule.factory('storage', ['localStorageService', '$mixpanel', function (lo
     },
     'cardio': {
       id: 'cardio',
-      name: 'Kondition',
+      name: 'Konditiont... Usch!',
       description: 'Basket uppfanns 1891 av den kanadensiske KFUM-tränaren James Naismith. Idag hör den till de mest utövade sporterna över hela världen och i USA är den av särskilt stor betydelse. Vart fjärde år spelas ett världsmästerskap i basket, arrangerat av internationella basketfederationen, Fédération Internationale de Basketball.',
       active: false,
       count: 0,

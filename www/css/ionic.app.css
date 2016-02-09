@@ -17,6 +17,7 @@ For example, you might change some of the default colors:
   used under CC BY http://creativecommons.org/licenses/by/4.0/
   Modified icons to fit ionicon’s grid from original.
 */
+@import url(https://fonts.googleapis.com/css?family=Oxygen+Mono);
 @font-face {
   font-family: "Ionicons";
   src: url("../lib/ionic/fonts/ionicons.eot?v=2.0.1");
@@ -9722,10 +9723,180 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+.name_wrapper {
+  position: absolute; }
+  .name_wrapper .name_letter {
+    font: 13px Oxygen Mono;
+    position: absolute;
+    color: #7f7f7f;
+    height: 70px;
+    width: 8px;
+    left: 47px;
+    top: -19px;
+    transform-origin: bottom center;
+    /*
+    &:first-child{
+      background: red;
+    }
+    */ }
+
+.name_letter_0 {
+  transform: rotate(20deg); }
+
+.name_letter_1 {
+  transform: rotate(27deg); }
+
+.name_letter_2 {
+  transform: rotate(34deg); }
+
+.name_letter_3 {
+  transform: rotate(41deg); }
+
+.name_letter_4 {
+  transform: rotate(48deg); }
+
+.name_letter_5 {
+  transform: rotate(55deg); }
+
+.name_letter_6 {
+  transform: rotate(62deg); }
+
+.name_letter_7 {
+  transform: rotate(69deg); }
+
+.name_letter_8 {
+  transform: rotate(76deg); }
+
+.name_letter_9 {
+  transform: rotate(83deg); }
+
+.name_letter_10 {
+  transform: rotate(90deg); }
+
+.name_letter_11 {
+  transform: rotate(97deg); }
+
+.name_letter_12 {
+  transform: rotate(104deg); }
+
+.name_letter_13 {
+  transform: rotate(111deg); }
+
+.name_letter_14 {
+  transform: rotate(118deg); }
+
+.name_letter_15 {
+  transform: rotate(125deg); }
+
+.name_letter_16 {
+  transform: rotate(132deg); }
+
+.name_letter_17 {
+  transform: rotate(139deg); }
+
+.name_letter_18 {
+  transform: rotate(146deg); }
+
+.name_letter_19 {
+  transform: rotate(153deg); }
+
+.name_letter_20 {
+  transform: rotate(160deg); }
+
+.name_letter_21 {
+  transform: rotate(167deg); }
+
+.name_letter_22 {
+  transform: rotate(174deg); }
+
+.name_letter_23 {
+  transform: rotate(181deg); }
+
+.name_letter_24 {
+  transform: rotate(188deg); }
+
+.name_letter_25 {
+  transform: rotate(195deg); }
+
+.name_letter_26 {
+  transform: rotate(202deg); }
+
+.name_letter_27 {
+  transform: rotate(209deg); }
+
+.name_letter_28 {
+  transform: rotate(216deg); }
+
+.name_letter_29 {
+  transform: rotate(223deg); }
+
+.name_letter_30 {
+  transform: rotate(230deg); }
+
+.name_letter_31 {
+  transform: rotate(237deg); }
+
+.name_letter_32 {
+  transform: rotate(244deg); }
+
+.name_letter_33 {
+  transform: rotate(251deg); }
+
+.name_letter_34 {
+  transform: rotate(258deg); }
+
+.name_letter_35 {
+  transform: rotate(265deg); }
+
+.name_letter_36 {
+  transform: rotate(272deg); }
+
+.name_letter_37 {
+  transform: rotate(279deg); }
+
+.name_letter_38 {
+  transform: rotate(286deg); }
+
+.name_letter_39 {
+  transform: rotate(293deg); }
+
+.name_letter_40 {
+  transform: rotate(300deg); }
+
+.name_letter_41 {
+  transform: rotate(307deg); }
+
+.name_letter_42 {
+  transform: rotate(314deg); }
+
+.name_letter_43 {
+  transform: rotate(321deg); }
+
+.name_letter_44 {
+  transform: rotate(328deg); }
+
+.name_letter_45 {
+  transform: rotate(335deg); }
+
+.name_letter_46 {
+  transform: rotate(342deg); }
+
+.name_letter_47 {
+  transform: rotate(349deg); }
+
+.name_letter_48 {
+  transform: rotate(356deg); }
+
+.name_letter_49 {
+  transform: rotate(363deg); }
+
+.name_letter_50 {
+  transform: rotate(370deg); }
+
 .item {
-  color: #4b4b4b !important; }
+  color: #7f7f7f !important; }
   .item span, .item p, .item small, .item span {
-    color: #4b4b4b !important; }
+    color: #7f7f7f !important; }
 
 .tab-title, .icon {
   color: #d1d2d4; }

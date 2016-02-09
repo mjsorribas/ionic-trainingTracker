@@ -16,7 +16,7 @@ $royal:                           #886aea !default;
 $dark:                            #fbfbfb !default;
 //$dark:                            #444 !default;
 
-$colorDarker : #4b4b4b;
+$colorDarker : #7f7f7f;
 $colorDark : #d1d2d4;
 $colorGreen : #8cc63f;
 
@@ -28,6 +28,35 @@ $font-family-base: "Lato", sans-serif !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+
+
+
+// name styles
+@import url(https://fonts.googleapis.com/css?family=Oxygen+Mono);
+.name_wrapper{
+  position: absolute;
+  .name_letter{
+    font: 13px Oxygen Mono;
+    position: absolute;
+    color: $colorDarker;
+    height: 70px;
+    width: 8px;
+    left: 47px;
+    top: -19px;
+    transform-origin: bottom center;
+    /*
+    &:first-child{
+      background: red;
+    }
+    */
+  }
+}
+@for $i from 0 through 50 {
+  $transform: rotate($i * 7+20deg);;
+  .name_letter_#{$i} {
+    transform: $transform;
+  }
+}
 
 
 

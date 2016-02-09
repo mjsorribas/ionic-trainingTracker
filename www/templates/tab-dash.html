@@ -5,37 +5,36 @@
       on-refresh="doRefresh()">
     </ion-refresher>
     <ion-list>
-      <br>
-
       <div class="row row-wrap">
         <div
           class="col col-50 text-center"
           ng-repeat="activity in storage.activityList | orderBy: 'count' : 'reverse'"
           ng-show="activity.active == true"
           ng-click="toggleEvent(activity)">
+          <br>
+          <br>
 
           <!-- big wrapper -->
           <div class="text-center"
-            style="width: 104px; height: 104px; padding: 1.5px; border-radius: 104px; margin: auto;"
+               style="width: 104px; height: 104px; padding: 1.5px; border-radius: 104px; margin: auto; position: relative;"
                ng-style="activity.currentEvent ? '':{'background-color': '#8cc63f'}">
 
-
+            <div class="name_wrapper">
+              <span class="name_letter name_letter_{{$index}}"  ng-repeat="let in activity.name track by $index">{{let}}</span>
+            </div>
             <div style="width: 100px; height: 100px; position: absolute; text-align: center; padding-top: 0;">
-              <div ng-hide="activity.currentEvent" style="padding-top: 35px;">
+              <div ng-hide="activity.currentEvent" style="padding-top: 40px;">
                 <span
                   style="color: white; font-size: 35px; line-height: 15px;"
                   ng-hide="activity.currentEvent">GO</span><br>
-                <span style="color: white;">{{activity.name}}</span><br>
-                <!--
-                <small ng-hide="activity.currentEvent.nextDate != undefined">{{activity.timeLimit |
-                  amDurationFormat: 'seconds'}}
-                </small>
-                -->
+                <!--<span style="color: white;">{{activity.name}}</span><br>-->
               </div>
 
-              <div ng-show="activity.currentEvent" style="padding-top: 35px;">
-                <span style="color: #8cc63f; font-size: 35px; line-height: 15px;">{{activity.currentEvent.nextDate | amDifference : null : 'hours'}}<small style="font-size: 18px;">t</small></span><br>
-                <span style="color: #8cc63f;">{{activity.count}}x{{activity.name}}</span><br>
+              <div ng-show="activity.currentEvent" style="padding-top: 40px;">
+                <span style="color: #7f7f7f; font-size: 35px; line-height: 15px;">{{activity.currentEvent.nextDate | amDifference : null : 'hours'}}<small
+                  style="font-size: 18px;">t
+                </small></span><br>
+                <!--<span style="color: #8cc63f;">{{activity.count}}x{{activity.name}}</span><br>-->
               </div>
             </div>
             <div
@@ -49,7 +48,7 @@
               stroke="1.5"
               semi="false"
               rounded="false"
-              clockwise="false"
+              clockwise="true"
               responsive="false"
               duration="1500"
               animation="easeInOutQuart"
