@@ -7,8 +7,10 @@
         Activity list
       </div>
       -->
-      <ion-item class="item-icon-left item-borderless item-toggle" ng-repeat="event in activityList">
-        <i class="icon ion-egg"></i>
+      <ion-item
+        ng-class="event.active ? 'greenRibbonList': ''"
+        class=" item-icon-left item-borderless item-toggle" ng-repeat="event in activityList">
+        <i class="icon ion-ribbon-a"></i>
         <strong>{{event.name}}</strong>
         <!--<small style="white-space: normal; overflow: auto; line-height: 1em;">{{event.description}}</small>-->
 

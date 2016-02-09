@@ -22,9 +22,9 @@
       <div class="item item-divider">
         Event history
       </div>
-      <ion-item class="item-icon-left item-borderless"
+      <ion-item class="greenRibbonList item-icon-left item-borderless"
                 ng-repeat="event in myStorage.eventList | orderBy : 'date' : 'reverse'">
-        <i class="icon ion-ribbon-b"></i>
+        <i class="icon ion-ribbon-a"></i>
         <strong>{{event.name}}</strong> |
         <small>{{event.date | amDateFormat : 'ddd Do MMM HH:mm'}}</small>
         <!--<p style="white-space: normal; overflow: auto; line-height: 1em; font-style: italic;">{{event.description}}</p>-->

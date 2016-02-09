@@ -9901,6 +9901,9 @@ a.button {
 .tab-title, .icon {
   color: #d1d2d4; }
 
+.greenRibbonList .icon.ion-ribbon-a {
+  color: #8cc63f !important; }
+
 .tab-item-active > .icon {
   color: #8cc63f !important; }
 
