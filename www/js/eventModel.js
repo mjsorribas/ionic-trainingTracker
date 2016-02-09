@@ -18,7 +18,7 @@ eventModule.factory('storage', ['localStorageService', '$mixpanel', function (lo
   };
   return storage;
 
-}]).factory('eventService', ['rfc4122', 'storage', 'localStorageService', function (rfc4122, storage, localStorageService) {
+}]).factory('eventService', ['rfc4122', 'storage', 'localStorageService', '$mixpanel', function (rfc4122, storage, localStorageService, $mixpanel) {
 
   var self = this;
   self.presetActivies = {
@@ -85,15 +85,16 @@ eventModule.factory('storage', ['localStorageService', '$mixpanel', function (lo
       timeLimit: 172800,
       currentEvent: undefined
     },
-    'basket': {
-      id: 'basket',
-      name: 'Baskett',
+    'cardio': {
+      id: 'cardio',
+      name: 'Kondition',
       description: 'Basket uppfanns 1891 av den kanadensiske KFUM-tränaren James Naismith. Idag hör den till de mest utövade sporterna över hela världen och i USA är den av särskilt stor betydelse. Vart fjärde år spelas ett världsmästerskap i basket, arrangerat av internationella basketfederationen, Fédération Internationale de Basketball.',
       active: false,
       count: 0,
       timeLimit: 172800,
       currentEvent: undefined
     }
+
   };
   function Event(id, uuid, name, description, date, timeLimit) {
     this.id = id;
@@ -107,11 +108,22 @@ eventModule.factory('storage', ['localStorageService', '$mixpanel', function (lo
   var eventService = {
     getActivityList: function () {
       var myStorage = storage.load();
+
       if (!myStorage.activityList) {
         myStorage.activityList = self.presetActivies;
         storage.update(myStorage);
       }
+
+      if (Object.keys(myStorage.activityList).length != Object.keys(self.presetActivies).length) {
+        myStorage.activityList = self.presetActivies;
+        for (var i in myStorage.activityList) {
+          myStorage.activityList[i].active = true;
+        }
+        storage.update(myStorage);
+      }
+
       return myStorage.activityList;
+
     },
     saveActivityList: function (updatedList) {
       var myStorage = storage.load();
@@ -131,10 +143,15 @@ eventModule.factory('storage', ['localStorageService', '$mixpanel', function (lo
         myStorage.activityList[activity.id].timeLimit
       );
       console.log(event.timeLimit);
-      event.nextDate = moment(event.date).add(event.timeLimit, 'seconds' );
+      event.nextDate = moment(event.date).add(event.timeLimit, 'seconds');
       myStorage.eventList.push(event);
       console.log('EventList', myStorage.eventList);
       storage.update(myStorage);
+
+      $mixpanel.track("Event created", {
+        "Activity": activity.id,
+        uuid: event.uuid
+      });
 
       return event;
     },
@@ -144,10 +161,19 @@ eventModule.factory('storage', ['localStorageService', '$mixpanel', function (lo
       for (var i = 0; i < myStorage.eventList.length; i++) {
 
         if (myStorage.eventList[i]['uuid'] == eventUUID) {
+
+          $mixpanel.track("Event aborted", {
+            "Activity": myStorage.eventList[i]['id'],
+            uuid : myStorage.eventList[i]['uuid']
+          });
+
+          console.log('object to track', myStorage.eventList[i]['id'], myStorage.eventList[i]['uuid'])
+
           myStorage.eventList.splice(i, 1);
+
         }
       }
-      console.log('after remove', myStorage.eventList);
+
       storage.update(myStorage);
     }
   };

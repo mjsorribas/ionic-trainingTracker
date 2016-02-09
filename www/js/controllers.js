@@ -1,12 +1,12 @@
 angular.module('starter.controllers', [])
 
-  .controller('DashCtrl', ['$scope', 'storage', '$mixpanel', 'rfc4122', 'eventService', '$interval', function ($scope, storage, $mixpanel, rfc4122, eventService, $interval) {
+  .controller('DashCtrl', ['$scope', 'storage', '$mixpanel', 'rfc4122', 'eventService', '$interval', '$ionicPopup', function ($scope, storage, $mixpanel, rfc4122, eventService, $interval, $ionicPopup) {
 
     var self = this;
 
     self.init = function () {
 
-      $mixpanel.track('InitDash');
+      $mixpanel.track("Viewing dashboard");
 
       $scope.storage = storage.load();
 
@@ -57,6 +57,8 @@ angular.module('starter.controllers', [])
     }, 1000);
 
 
+
+
     $scope.$on("$ionicView.beforeEnter", function (event) {
       self.init();
     });
@@ -77,7 +79,7 @@ angular.module('starter.controllers', [])
 
     $scope.toggleEvent = function (activity) {
       if (activity.currentEvent) {
-        $scope.deleteEvent(activity.currentEvent.uuid);
+        $scope.showConfirm(activity);
       } else {
         $scope.addEvent(activity);
       }
@@ -93,6 +95,21 @@ angular.module('starter.controllers', [])
       eventService.removeEvent(eventUUID);
     };
 
+    $scope.showConfirm = function(activity) {
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Reset timer',
+        template: 'Are you sure you want to reset the timer?'
+      });
+
+      confirmPopup.then(function(res) {
+        if(res) {
+          $scope.deleteEvent(activity.currentEvent.uuid);
+        } else {
+
+        }
+      });
+    };
+
 
     $scope.doRefresh = function () {
       self.init();
@@ -105,7 +122,6 @@ angular.module('starter.controllers', [])
     var self = this;
 
     self.init = function () {
-      $mixpanel.track('InitTrack');
       $scope.activityList = eventService.getActivityList();
     };
     self.init();
@@ -115,6 +131,7 @@ angular.module('starter.controllers', [])
     });
 
     $scope.updateEvent = function (updatedList) {
+      $mixpanel.track("Updating trackings");
       eventService.saveActivityList(updatedList);
     }
 
@@ -127,7 +144,9 @@ angular.module('starter.controllers', [])
     $scope.events = {};
 
     self.init = function () {
-      $mixpanel.track('InitStats');
+
+      $mixpanel.track("Viewing stats");
+
       $scope.myStorage = storage.load();
 
       // add data for history events
@@ -158,6 +177,7 @@ angular.module('starter.controllers', [])
           subCaption: "",
           numberPrefix: "",
           theme: "carbon"
+          //theme: "carbon"
         },
         data: $scope.pileStats
       };

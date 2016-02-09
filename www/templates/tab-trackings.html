@@ -1,13 +1,16 @@
-<ion-view view-title="Trackings"  class="">
+<ion-view view-title="Activities to track"  class="">
   <ion-content class="">
 
     <ion-list>
+      <!--
       <div class="item item-divider">
         Activity list
       </div>
+      -->
       <ion-item class="item-icon-left item-borderless item-toggle" ng-repeat="event in activityList">
         <i class="icon ion-egg"></i>
-        <strong>{{event.name}}</strong> <small>{{event.description}}</small>
+        <strong>{{event.name}}</strong>
+        <!--<small style="white-space: normal; overflow: auto; line-height: 1em;">{{event.description}}</small>-->
 
         <label class="toggle toggle-assertive">
           <input type="checkbox" ng-model="event.active" ng-change="updateEvent(activityList)">

@@ -3,21 +3,67 @@ To customize the look and feel of Ionic, you can override the variables
 in ionic's _variables.scss file.
 
 For example, you might change some of the default colors:
-
+*/
 $light:                           #fff !default;
 $stable:                          #f8f8f8 !default;
 $positive:                        #387ef5 !default;
 $calm:                            #11c1f3 !default;
 $balanced:                        #33cd5f !default;
 $energized:                       #ffc900 !default;
-$assertive:                       #ef473a !default;
+$assertive:                       #8cc63f !default;
+//$assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
-$dark:                            #444 !default;
-*/
+$dark:                            #fbfbfb !default;
+//$dark:                            #444 !default;
+
+$colorDarker : #4b4b4b;
+$colorDark : #d1d2d4;
+$colorGreen : #8cc63f;
+
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
+@import url(https://fonts.googleapis.com/css?family=Lato:300);
+$font-family-base: "Lato", sans-serif !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+
+
+
+.item{
+  color: $colorDarker !important;
+  span, p, small, span{
+    color: $colorDarker !important;
+  }
+}
+
+.tab-nav.tabs, .bar.bar-header{
+  //background: #fff;
+}
+
+.tab-title, .icon{
+  color: $colorDark;
+}
+
+.tab-item-active > .icon{
+  color: $colorGreen !important;
+}
+
+
+.toggle .handle{
+  box-shadow: none;
+  background: $colorDark;
+}
+
+
+// green navigation bar text
+.bar.bar-dark .title{
+  color: $colorGreen;
+}
+// change color on tab bar outline
+.tabs-dark > .tabs, .bar.bar-stable{
+  background-image: linear-gradient(0deg, $colorDark, $colorDark 50%, transparent 50%);
+}
+
 

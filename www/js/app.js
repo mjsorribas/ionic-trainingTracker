@@ -33,13 +33,16 @@ angular.module('starter', [
   })
 
   .config(['$mixpanelProvider', function ($mixpanelProvider) {
+
+
     $mixpanelProvider.apiKey('f0d63d355d19be29863a7de93aff8bbb'); // your token is different than your API key
+
     /*
-    $mixpanelProvider.superProperties({
-      someProp: true,
-      anotherOne: [1,2,3]
-    });
-    */
+     $mixpanelProvider.superProperties({
+     someProp: true,
+     anotherOne: [1,2,3]
+     });
+     */
   }])
 
   .config(function ($stateProvider, $urlRouterProvider) {
@@ -92,11 +95,11 @@ angular.module('starter', [
     $urlRouterProvider.otherwise('/tab/dash');
 
   })
-  .run(function (amMoment,rfc4122, localStorageService, $mixpanel) {
+  .run(function (amMoment, rfc4122, localStorageService, $mixpanel) {
 
-    if(!localStorageService.load('userUUID')){
+    if (!localStorageService.load('userUUID')) {
       localStorageService.save('userUUID', rfc4122.v4());
-    }else{
+    } else {
       $mixpanel.identify(localStorageService.load('userUUID'));
     }
     amMoment.changeLocale('sv');
