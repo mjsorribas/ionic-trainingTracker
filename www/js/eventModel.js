@@ -133,12 +133,9 @@ eventModule.factory('storage', ['localStorageService', '$mixpanel', function (lo
         new Date(),
         myStorage.activityList[activity.id].timeLimit
       );
-      console.log(event.timeLimit);
-      event.nextDate = moment(event.date).add(event.timeLimit, 'seconds');
+      event.nextDate = moment(event.date).add(event.timeLimit, 'seconds').startOf('day');
       myStorage.eventList.push(event);
-      console.log('EventList', myStorage.eventList);
       storage.update(myStorage);
-
       $mixpanel.track("Event created", {
         "Activity": activity.id,
         uuid: event.uuid
