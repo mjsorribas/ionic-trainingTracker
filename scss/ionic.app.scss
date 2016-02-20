@@ -37,15 +37,16 @@ $font-family-base: "Lato", sans-serif !default;
 .name_wrapper{
   position: absolute;
   .name_letter{
-    font: 13px Cousine;
+    font: 12px Cousine;
     text-transform: uppercase;
     position: absolute;
     //color: $colorDarker;
-    height: 70px;
+    height: 64px;
     width: 8px;
-    left: 46.5px;
-    top: -19.5px;
+    left: 46px;
+    top: -14px;
     transform-origin: bottom center;
+
     /*
     &:first-child{
       background: red;
@@ -69,13 +70,13 @@ $font-family-base: "Lato", sans-serif !default;
   margin: auto;
   position: relative;
   box-sizing: content-box;
-  border: 25px solid $colorGreenSecond;
+  border: 15px solid $colorGreenSecond;
   color: white !important;
   .name_letter{
     color: white !important;
   }
   &.active{
-    border: 25px solid #f8f8f8;
+    border: 15px solid #f8f8f8;
     .name_letter{
       color: $colorDarker !important;
     }

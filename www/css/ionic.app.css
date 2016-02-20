@@ -9726,13 +9726,13 @@ a.button {
 .name_wrapper {
   position: absolute; }
   .name_wrapper .name_letter {
-    font: 13px Cousine;
+    font: 12px Cousine;
     text-transform: uppercase;
     position: absolute;
-    height: 70px;
+    height: 64px;
     width: 8px;
-    left: 46.5px;
-    top: -19.5px;
+    left: 46px;
+    top: -14px;
     transform-origin: bottom center;
     /*
     &:first-child{
@@ -9901,12 +9901,12 @@ a.button {
   margin: auto;
   position: relative;
   box-sizing: content-box;
-  border: 25px solid #8cc63f;
+  border: 15px solid #8cc63f;
   color: white !important; }
   .activity_wrapper .name_letter {
     color: white !important; }
   .activity_wrapper.active {
-    border: 25px solid #f8f8f8; }
+    border: 15px solid #f8f8f8; }
     .activity_wrapper.active .name_letter {
       color: #7f7f7f !important; }
 

@@ -97,8 +97,6 @@ angular.module('starter', [
   })
   .filter('convertToArray', function() {
     return function(input) {
-      console.log(input);
-
       var newList = [];
       for(var i in input){
         newList.push(input[i]);
