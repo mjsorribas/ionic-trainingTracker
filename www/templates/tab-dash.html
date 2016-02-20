@@ -4,13 +4,15 @@
       pulling-text="Pull to refresh..."
       on-refresh="doRefresh()">
     </ion-refresher>
+
     <ion-list>
       <div class="row row-wrap">
         <div
           class="col col-50 text-center"
-          ng-repeat="activity in storage.activityList | orderBy: 'count' : 'reverse'"
+          ng-repeat="activity in storage.activityList | convertToArray | orderBy: ['-currentEvent', 'count']"
           ng-show="activity.active == true"
           ng-click="toggleEvent(activity)">
+
           <br>
           <br>
 
@@ -20,7 +22,8 @@
                ng-style="activity.currentEvent ? '':{'background-color': '#8cc63f'}">
 
             <div class="name_wrapper">
-              <span class="name_letter name_letter_{{$index}}"  ng-repeat="let in activity.name track by $index">{{let}}</span>
+              <span class="name_letter name_letter_{{$index}}"
+                    ng-repeat="let in activity.name track by $index">{{let}}</span>
             </div>
             <div style="width: 100px; height: 100px; position: absolute; text-align: center; padding-top: 0;">
               <div ng-hide="activity.currentEvent" style="padding-top: 40px;">
@@ -55,20 +58,6 @@
               animation-delay="0">
             </div>
           </div>
-          <!--
-          <small am-time-ago="activity.currentEvent.date"></small>
-          <small ng-show="activity.currentEvent.nextDate != undefined" class="">, nästa tillfälle är tidigast
-          </small>
-          <small
-            ng-show="activity.currentEvent.nextDate != undefined"
-            class=""
-            am-time-ago="activity.currentEvent.nextDate">
-          </small>
-          <span ng-show="activity.currentEvent.nextDate != undefined">.</span>
-          <small ng-hide="activity.currentEvent.nextDate != undefined">Tidsgräns: {{activity.timeLimit |
-            amDurationFormat: 'seconds'}}
-          </small>
-          -->
         </div>
       </div>
 

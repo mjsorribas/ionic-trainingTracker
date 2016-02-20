@@ -95,6 +95,17 @@ angular.module('starter', [
     $urlRouterProvider.otherwise('/tab/dash');
 
   })
+  .filter('convertToArray', function() {
+    return function(input) {
+      console.log(input);
+
+      var newList = [];
+      for(var i in input){
+        newList.push(input[i]);
+      }
+      return newList;
+    };
+  })
   .run(function (amMoment, rfc4122, localStorageService, $mixpanel) {
 
     if (!localStorageService.load('userUUID')) {

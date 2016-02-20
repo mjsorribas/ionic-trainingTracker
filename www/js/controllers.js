@@ -47,16 +47,14 @@ angular.module('starter.controllers', [])
 
     $interval(function () {
       $scope.currentDate = new Date();
-      for(var activity in $scope.storage.activityList){
-        if($scope.storage.activityList[activity].currentEvent){
-          if(moment($scope.storage.activityList[activity].currentEvent.nextDate).isBefore(new Date())){
+      for (var activity in $scope.storage.activityList) {
+        if ($scope.storage.activityList[activity].currentEvent) {
+          if (moment($scope.storage.activityList[activity].currentEvent.nextDate).isBefore(new Date())) {
             delete $scope.storage.activityList[activity].currentEvent;
           }
         }
       }
     }, 1000);
-
-
 
 
     $scope.$on("$ionicView.beforeEnter", function (event) {
@@ -95,14 +93,14 @@ angular.module('starter.controllers', [])
       eventService.removeEvent(eventUUID);
     };
 
-    $scope.showConfirm = function(activity) {
+    $scope.showConfirm = function (activity) {
       var confirmPopup = $ionicPopup.confirm({
         title: 'Reset timer',
         template: 'Are you sure you want to reset the timer?'
       });
 
-      confirmPopup.then(function(res) {
-        if(res) {
+      confirmPopup.then(function (res) {
+        if (res) {
           $scope.deleteEvent(activity.currentEvent.uuid);
         } else {
 
