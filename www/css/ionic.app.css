@@ -17,7 +17,7 @@ For example, you might change some of the default colors:
   used under CC BY http://creativecommons.org/licenses/by/4.0/
   Modified icons to fit ionicon’s grid from original.
 */
-@import url(https://fonts.googleapis.com/css?family=Oxygen+Mono);
+@import url(https://fonts.googleapis.com/css?family=Cousine);
 @font-face {
   font-family: "Ionicons";
   src: url("../lib/ionic/fonts/ionicons.eot?v=2.0.1");
@@ -9726,13 +9726,13 @@ a.button {
 .name_wrapper {
   position: absolute; }
   .name_wrapper .name_letter {
-    font: 13px Oxygen Mono;
+    font: 13px Cousine;
+    text-transform: uppercase;
     position: absolute;
-    color: #7f7f7f;
     height: 70px;
     width: 8px;
-    left: 47px;
-    top: -19px;
+    left: 46.5px;
+    top: -19.5px;
     transform-origin: bottom center;
     /*
     &:first-child{
@@ -9892,6 +9892,23 @@ a.button {
 
 .name_letter_50 {
   transform: rotate(370deg); }
+
+.activity_wrapper {
+  width: 100px;
+  height: 100px;
+  padding: 2px;
+  border-radius: 104px;
+  margin: auto;
+  position: relative;
+  box-sizing: content-box;
+  border: 25px solid #8cc63f;
+  color: white !important; }
+  .activity_wrapper .name_letter {
+    color: white !important; }
+  .activity_wrapper.active {
+    border: 25px solid #f8f8f8; }
+    .activity_wrapper.active .name_letter {
+      color: #7f7f7f !important; }
 
 .item {
   color: #7f7f7f !important; }

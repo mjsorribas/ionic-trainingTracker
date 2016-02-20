@@ -19,6 +19,7 @@ $dark:                            #fbfbfb !default;
 $colorDarker : #7f7f7f;
 $colorDark : #d1d2d4;
 $colorGreen : #8cc63f;
+$colorGreenSecond : #8cc63f;
 
 
 // The path for our ionicons font files, relative to the built CSS in www/css
@@ -32,17 +33,18 @@ $font-family-base: "Lato", sans-serif !default;
 
 
 // name styles
-@import url(https://fonts.googleapis.com/css?family=Oxygen+Mono);
+@import url(https://fonts.googleapis.com/css?family=Cousine);
 .name_wrapper{
   position: absolute;
   .name_letter{
-    font: 13px Oxygen Mono;
+    font: 13px Cousine;
+    text-transform: uppercase;
     position: absolute;
-    color: $colorDarker;
+    //color: $colorDarker;
     height: 70px;
     width: 8px;
-    left: 47px;
-    top: -19px;
+    left: 46.5px;
+    top: -19.5px;
     transform-origin: bottom center;
     /*
     &:first-child{
@@ -58,6 +60,27 @@ $font-family-base: "Lato", sans-serif !default;
   }
 }
 
+
+.activity_wrapper{
+  width: 100px;
+  height: 100px;
+  padding: 2px;
+  border-radius: 104px;
+  margin: auto;
+  position: relative;
+  box-sizing: content-box;
+  border: 25px solid $colorGreenSecond;
+  color: white !important;
+  .name_letter{
+    color: white !important;
+  }
+  &.active{
+    border: 25px solid #f8f8f8;
+    .name_letter{
+      color: $colorDarker !important;
+    }
+  }
+}
 
 
 .item{

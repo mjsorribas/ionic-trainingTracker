@@ -13,12 +13,13 @@
           ng-show="activity.active == true"
           ng-click="toggleEvent(activity)">
 
+
           <br>
           <br>
 
           <!-- big wrapper -->
-          <div class="text-center"
-               style="width: 104px; height: 104px; padding: 1.5px; border-radius: 104px; margin: auto; position: relative;"
+          <div class="text-center activity_wrapper"
+               ng-class="activity.currentEvent ? 'active': ''"
                ng-style="activity.currentEvent ? '':{'background-color': '#8cc63f'}">
 
             <div class="name_wrapper">
@@ -48,7 +49,7 @@
               color="{{activity.currentEvent?'#8cc63f':'transparent'}}"
               bgcolor="{{activity.currentEvent?'#f8f8f8':'white'}}"
               radius="50"
-              stroke="1.5"
+              stroke="2"
               semi="false"
               rounded="false"
               clockwise="true"
